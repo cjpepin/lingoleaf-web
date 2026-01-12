@@ -12,15 +12,17 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative px-6 py-16 md:py-24">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+      <section className="relative px-6 min-h-screen flex items-center justify-center">
+        <div className="max-w-4xl mx-auto text-center space-y-8 -mt-16">
           {/* App Icon */}
           <div className="flex justify-center opacity-0 animate-fade-in" style={{ animationDelay: "0ms", animationFillMode: "forwards" }}>
-            <img
-              src={lingualeafIcon}
-              alt="LinguaLeaf"
-              className="w-28 h-28 md:w-36 md:h-36 rounded-3xl shadow-xl"
-            />
+            <div className="w-28 h-28 md:w-36 md:h-36 rounded-3xl shadow-xl overflow-hidden bg-primary">
+              <img
+                src={lingualeafIcon}
+                alt="LinguaLeaf"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
 
           {/* App Name & Tagline */}
