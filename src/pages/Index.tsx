@@ -1,36 +1,8 @@
 import { Button } from "@/components/ui/button";
-import FeatureCard from "@/components/FeatureCard";
 import AppStoreButtons from "@/components/AppStoreButtons";
+import FeatureShowcase from "@/components/FeatureShowcase";
 import lingualeafIcon from "@/assets/lingualeaf_icon.png";
-import { BookOpen, Globe, Sparkles, NotebookPen, Target } from "lucide-react";
-
-const features = [
-  {
-    icon: <BookOpen className="w-6 h-6 text-primary" />,
-    title: "Read What You Love",
-    description: "Dive into books in your target language — no dictionary juggling required.",
-  },
-  {
-    icon: <Globe className="w-6 h-6 text-primary" />,
-    title: "Translate Instantly",
-    description: "Tap any word or phrase to see what it means, right where you're reading.",
-  },
-  {
-    icon: <Sparkles className="w-6 h-6 text-primary" />,
-    title: "Highlight & Remember",
-    description: "Mark important passages and come back to them anytime.",
-  },
-  {
-    icon: <NotebookPen className="w-6 h-6 text-primary" />,
-    title: "Build Your Word List",
-    description: "Save new vocabulary with context so you actually remember it.",
-  },
-  {
-    icon: <Target className="w-6 h-6 text-primary" />,
-    title: "Learn Your Way",
-    description: "Choose from dozens of languages and learn at your own pace.",
-  },
-];
+import { ExternalLink } from "lucide-react";
 
 const Index = () => {
   const handleOpenApp = () => {
@@ -62,42 +34,27 @@ const Index = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "300ms", animationFillMode: "forwards" }}>
-            <Button
-              size="lg"
-              className="px-8 py-6 text-lg font-semibold"
-              onClick={handleOpenApp}
-            >
-              Open App
-            </Button>
+          <div className="flex flex-col items-center gap-6 pt-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "300ms", animationFillMode: "forwards" }}>
             <AppStoreButtons />
+            
+            {/* Subtle open app link for users who already have it */}
+            <button
+              onClick={handleOpenApp}
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              Already have it? 
+              <span className="underline underline-offset-2">Open App</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="px-6 py-16 bg-muted/30">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-12 opacity-0 animate-fade-in" style={{ animationDelay: "400ms", animationFillMode: "forwards" }}>
-            Everything you need to read and learn
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
-              <FeatureCard
-                key={feature.title}
-                icon={feature.icon}
-                title={feature.title}
-                description={feature.description}
-                delay={500 + index * 100}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeatureShowcase />
 
       {/* Footer */}
-      <footer className="px-6 py-12 text-center">
+      <footer className="px-6 py-12 text-center border-t border-border/50">
         <div className="max-w-md mx-auto space-y-6">
           <img
             src={lingualeafIcon}
