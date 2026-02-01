@@ -1,13 +1,28 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import AppStoreButtons from "@/components/AppStoreButtons";
 import FeatureShowcase from "@/components/FeatureShowcase";
-import lingualeafIcon from "@/assets/lingualeaf_icon.png";
-import { ExternalLink } from "lucide-react";
+import lingoleafIcon from "@/assets/lingoleaf_icon.png";
+import { ExternalLink, ChevronDown } from "lucide-react";
 
 const Index = () => {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const handleOpenApp = () => {
-    window.location.href = "lingualeaf://";
+    window.location.href = "lingoleaf://";
   };
+
+  const handleLearnMore = () => {
+    document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const learnMoreOpacity = Math.max(0, 1 - scrollY / 150);
 
   return (
     <div className="min-h-screen bg-background">
@@ -17,16 +32,16 @@ const Index = () => {
           {/* App Icon */}
           <div className="flex justify-center opacity-0 animate-fade-in" style={{ animationDelay: "0ms", animationFillMode: "forwards" }}>
             <img
-              src={lingualeafIcon}
+              src={lingoleafIcon}
               alt="LinguaLeaf"
-              className="w-28 h-28 md:w-36 md:h-36 shadow-xl"
+              className="w-28 h-28 md:w-36 md:h-36 shadow-2xl rounded-[2rem]"
             />
           </div>
 
           {/* App Name & Tagline */}
           <div className="space-y-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "150ms", animationFillMode: "forwards" }}>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
-              LinguaLeaf
+              Lingoleaf
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-lg mx-auto">
               Read in any language. Learn as you go.
@@ -48,21 +63,34 @@ const Index = () => {
             </button>
           </div>
         </div>
+
+        {/* Learn more arrow - fades on scroll */}
+        <button
+          onClick={handleLearnMore}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground hover:text-foreground transition-colors duration-300"
+          style={{ opacity: learnMoreOpacity, pointerEvents: learnMoreOpacity < 0.1 ? "none" : "auto" }}
+          aria-label="Scroll to learn more"
+        >
+          <span className="text-sm font-medium">Learn more</span>
+          <ChevronDown className="w-5 h-5 animate-bounce-soft" />
+        </button>
       </section>
 
       {/* Features Section */}
-      <FeatureShowcase />
+      <div id="features">
+        <FeatureShowcase />
+      </div>
 
       {/* Footer */}
       <footer className="px-6 py-12 text-center border-t border-border/50">
         <div className="max-w-md mx-auto space-y-6">
           <img
-            src={lingualeafIcon}
+            src={lingoleafIcon}
             alt="LinguaLeaf"
             className="w-12 h-12 rounded-xl mx-auto opacity-60"
           />
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} LinguaLeaf. Read beautifully in any language.
+            © {new Date().getFullYear()} Lingoleaf. Read beautifully in any language.
           </p>
         </div>
       </footer>

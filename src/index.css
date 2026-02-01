@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LinguaLeaf Design System
+/* Lingoleaf Design System
    Natural "leaf green" palette with warm neutrals
    All colors in HSL format
 */
@@ -136,6 +136,10 @@
   .animate-check {
     animation: check-draw 0.5s ease-out 0.2s forwards;
   }
+
+  .animate-bounce-soft {
+    animation: bounce-soft 2s ease-in-out infinite;
+  }
 }
 
 @keyframes fade-in {
@@ -175,5 +179,15 @@
   }
   to {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
   }
 }

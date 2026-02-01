@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "lingualeaf-web",
+  "name": "lingoleaf-web",
   "compatibility_date": "2026-01-15",
   "assets": {
     "directory": "./dist",

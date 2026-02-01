@@ -1,10 +1,10 @@
 import SuccessCheckmark from "@/components/SuccessCheckmark";
 import { Button } from "@/components/ui/button";
-import lingualeafIcon from "@/assets/lingualeaf_icon.png";
+import lingoleafIcon from "@/assets/lingoleaf_icon.png";
 
 const AuthConfirm = () => {
   const handleOpenApp = () => {
-    window.location.href = "lingualeaf://";
+    window.location.href = "lingoleaf://";
   };
 
   return (
@@ -13,8 +13,8 @@ const AuthConfirm = () => {
         {/* App Icon */}
         <div className="flex justify-center opacity-0 animate-fade-in" style={{ animationDelay: "0ms", animationFillMode: "forwards" }}>
           <img
-            src={lingualeafIcon}
-            alt="LinguaLeaf"
+            src={lingoleafIcon}
+            alt="Lingoleaf"
             className="w-20 h-20 rounded-2xl shadow-lg"
           />
         </div>
@@ -41,11 +41,11 @@ const AuthConfirm = () => {
             className="w-full py-6 text-lg font-semibold"
             onClick={handleOpenApp}
           >
-            Open LinguaLeaf
+            Open Lingoleaf
           </Button>
           
           <p className="mt-4 text-sm text-muted-foreground">
-            If the app doesn't open, make sure you have LinguaLeaf installed on your device.
+            If the app doesn't open, make sure you have Lingoleaf installed on your device.
           </p>
         </div>
       </div>
