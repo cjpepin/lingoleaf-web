@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "lingoleaf-web",
+  "compatibility_date": "2026-01-15",
+  "pages_build_output_dir": "./dist"
+}
+
