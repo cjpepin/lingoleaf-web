@@ -76,8 +76,8 @@ flowchart LR
 ### Local setup
 
 ```sh
-git clone https://github.com/cjpepin/lingualeaf-web.git
-cd lingualeaf-web
+git clone https://github.com/cjpepin/lingoleaf-web.git
+cd lingoleaf-web
 npm install
 cp .env.example .env
 # Fill in VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_TURNSTILE_SITE_KEY
