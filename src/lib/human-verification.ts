@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase";
+import { apiPath } from "@/lib/paths";
 
 const STORAGE_KEY = "forum_human_verification_expires_at";
 
@@ -27,7 +28,7 @@ export const verifyHumanChallenge = async (turnstileToken: string) => {
     throw new Error("You must be logged in to verify.");
   }
 
-  const response = await fetch("/api/turnstile-verify", {
+  const response = await fetch(apiPath("turnstile-verify"), {
     method: "POST",
     headers: {
       Authorization: `Bearer ${accessToken}`,

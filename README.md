@@ -2,11 +2,11 @@
 
 **Read in any language. Learn as you go.**
 
-Companion website for [LingoLeaf](https://lingoleaf.app), an iOS language-learning app built around immersive reading. This repository is the marketing site, community forum, app updates blog, and admin tooling — **not** the mobile app source code.
+Companion website for LingoLeaf, an iOS language-learning app built around immersive reading. Served at **`/lingoleaf`** on your domain. Uses the **`lingoleaf` Postgres schema** in a shared Supabase project — **not** the mobile app source code.
 
 | | |
 |---|---|
-| **Live site** | [lingoleaf.app](https://lingoleaf.app) |
+| **App routes** | `https://yourdomain.com/lingoleaf/` |
 | **App Store** | [Download on iOS](https://apps.apple.com/us/app/lingoleaf/id6758588394) |
 | **License** | [MIT](LICENSE) |
 
@@ -31,15 +31,14 @@ The iOS app is a separate codebase. This repo powers the public website and comm
 
 ## What this site includes
 
-| Feature | URL | Description |
-|---------|-----|-------------|
-| Landing page | [/](https://lingoleaf.app/) | App overview and App Store download |
-| Feature Forum | [/features](https://lingoleaf.app/features) | Community feature requests, voting, and comments |
-| App Updates | [/updates](https://lingoleaf.app/updates) | Release notes and discussion |
-| Contact | [/contact](https://lingoleaf.app/contact) | Email contact form |
-| Admin analytics | `/admin/analytics` | Mobile app event dashboard (forum admins only) |
-
-Visit the [live site](https://lingoleaf.app) to see the full UI. Screenshots and marketing assets live in [`public/showcase/`](public/showcase/).
+| Feature | Route | Description |
+|---------|-------|-------------|
+| Landing page | `/lingoleaf/` | App overview and App Store download |
+| Feature Forum | `/lingoleaf/features` | Community feature requests, voting, and comments |
+| App Updates | `/lingoleaf/updates` | Release notes and discussion |
+| Contact | `/lingoleaf/contact` | Email contact form |
+| Admin analytics | `/lingoleaf/admin/analytics` | Mobile app event dashboard (forum admins only) |
+| API | `/lingoleaf/api/*` | Cloudflare Pages Functions (contact, Turnstile, analytics) |
 
 ---
 
@@ -48,7 +47,7 @@ Visit the [live site](https://lingoleaf.app) to see the full UI. Screenshots and
 | Layer | Technology |
 |-------|------------|
 | Frontend | Vite, React 18, TypeScript, Tailwind CSS, shadcn/ui |
-| Auth & database | Supabase (Postgres, RLS, RPC) |
+| Auth & database | Supabase (`lingoleaf` schema, shared project) |
 | Hosting | Cloudflare Pages |
 | Serverless API | Cloudflare Pages Functions |
 | Email | Resend |
@@ -56,8 +55,8 @@ Visit the [live site](https://lingoleaf.app) to see the full UI. Screenshots and
 
 ```mermaid
 flowchart LR
-  Browser[Browser SPA] -->|anon key| Supabase[(Supabase)]
-  Browser -->|/api/*| CF[Cloudflare Functions]
+  Browser -->|anon key + lingoleaf schema| Supabase[(Supabase)]
+  Browser -->|/lingoleaf/api/*| CF[Cloudflare Functions]
   CF -->|secrets| Resend[Resend]
   CF -->|Turnstile verify| Turnstile[Cloudflare Turnstile]
   CF -->|service role RPC| Supabase
@@ -80,11 +79,11 @@ git clone https://github.com/cjpepin/lingoleaf-web.git
 cd lingoleaf-web
 npm install
 cp .env.example .env
-# Fill in VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_TURNSTILE_SITE_KEY
+# Fill in VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_SUPABASE_DB_SCHEMA, VITE_TURNSTILE_SITE_KEY
 npm run dev
 ```
 
-Dev server runs at [http://localhost:8080](http://localhost:8080).
+Dev server: [http://localhost:8080/lingoleaf/](http://localhost:8080/lingoleaf/)
 
 ### Environment variables
 
@@ -92,6 +91,7 @@ Dev server runs at [http://localhost:8080](http://localhost:8080).
 |----------|-----------------|---------|
 | `VITE_SUPABASE_URL` | Client | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | Client | Public anon key (RLS-protected) |
+| `VITE_SUPABASE_DB_SCHEMA` | Client | Postgres schema (`lingoleaf`) |
 | `VITE_TURNSTILE_SITE_KEY` | Client | Turnstile widget site key |
 | `SUPABASE_URL` | Server (Cloudflare) | Functions → Supabase |
 | `SUPABASE_ANON_KEY` | Server (Cloudflare) | Session validation |
@@ -105,7 +105,7 @@ See [`.env.example`](.env.example) for the full list.
 
 ```
 src/                  React SPA (pages, components, hooks)
-functions/api/        Cloudflare Pages Functions
+functions/lingoleaf/api/  Cloudflare Pages Functions (/lingoleaf/api/*)
 supabase/migrations/  Postgres schema, RLS policies, RPCs
 tests/                Unit and integration tests
 docs/                 Deployment and security setup guides
@@ -123,11 +123,11 @@ npm run build    # Production build → dist/
 
 ### Supabase migrations
 
-Apply migrations in chronological order under [`supabase/migrations/`](supabase/migrations/). See [docs/turnstile-supabase-setup.md](docs/turnstile-supabase-setup.md) for the full setup guide including admin seeding.
+Apply the greenfield migration [`supabase/migrations/202604090001_lingoleaf_schema.sql`](supabase/migrations/202604090001_lingoleaf_schema.sql). See [supabase/README.md](supabase/README.md) and [docs/turnstile-supabase-setup.md](docs/turnstile-supabase-setup.md).
 
 ### Deployment
 
-Build output goes to `dist/`. Cloudflare Pages serves the SPA and `functions/` as Pages Functions. See:
+Build output goes to `dist/` (assets under `/lingoleaf/`). Cloudflare Pages serves the SPA at `/lingoleaf` and Functions at `/lingoleaf/api/*`. Ensure `public/_redirects` is deployed for SPA fallback.
 
 - [docs/turnstile-supabase-setup.md](docs/turnstile-supabase-setup.md)
 - [docs/cloudflare-waf-rate-limits.md](docs/cloudflare-waf-rate-limits.md)
@@ -147,5 +147,5 @@ Issues and focused PRs are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Legal
 
-- [Privacy Policy](https://lingoleaf.app/privacy)
-- [Terms & Conditions](https://lingoleaf.app/terms)
+- [Privacy Policy](/lingoleaf/privacy-policy) (on your domain)
+- [Terms & Conditions](/lingoleaf/terms-and-conditions)

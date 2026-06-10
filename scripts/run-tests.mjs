@@ -9,12 +9,14 @@ const testsDir = path.join(rootDir, "tests");
 const outDir = path.join(rootDir, ".test-dist");
 
 const esbuildDefine = {
+  "import.meta.env.BASE_URL": JSON.stringify("/lingoleaf/"),
   "import.meta.env.DEV": "false",
   "import.meta.env.VITE_SUPABASE_URL": JSON.stringify("https://example.supabase.co"),
   "import.meta.env.SUPABASE_URL": JSON.stringify("https://example.supabase.co"),
   "import.meta.env.VITE_SUPABASE_ANON_KEY": JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.signature"),
   "import.meta.env.SUPABASE_ANON_KEY": JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.signature"),
   "import.meta.env.VITE_TURNSTILE_SITE_KEY": JSON.stringify("test-site-key"),
+  "import.meta.env.VITE_SUPABASE_DB_SCHEMA": JSON.stringify("lingoleaf"),
 };
 
 const collectTestFiles = async (dir) => {

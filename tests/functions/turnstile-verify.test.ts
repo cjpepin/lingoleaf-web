@@ -1,10 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { onRequestPost } from "../../functions/api/turnstile-verify.ts";
+import { onRequestPost } from "../../functions/lingoleaf/api/turnstile-verify.ts";
 import { jsonResponse, readJson, withMockedFetch } from "../helpers/http.ts";
 
-const createRequest = (body: Record<string, unknown>, token?: string, origin = "https://lingoleaf.app") =>
-  new Request("https://lingoleaf.app/api/turnstile-verify", {
+const APP_ORIGIN = "https://example.com";
+const API_TURNSTILE = `${APP_ORIGIN}/lingoleaf/api/turnstile-verify`;
+
+const createRequest = (body: Record<string, unknown>, token?: string, origin = APP_ORIGIN) =>
+  new Request(API_TURNSTILE, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

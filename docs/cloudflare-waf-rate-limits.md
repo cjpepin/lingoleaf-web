@@ -5,9 +5,11 @@ Configure these in Cloudflare Dashboard:
 1. Go to **Security -> WAF -> Rate limiting rules**
 2. Create the following rules for your zone.
 
+LingoLeaf is served under **`/lingoleaf`**.
+
 ## Rule 1: Burst protection for feature pages
 - Expression:
-  - `(http.request.uri.path starts_with "/features")`
+  - `(http.request.uri.path starts_with "/lingoleaf/features")`
 - Counting characteristics:
   - `IP`
 - Threshold:
@@ -19,7 +21,7 @@ Configure these in Cloudflare Dashboard:
 
 ## Rule 2: Tight burst protection for API abuse (Turnstile verify)
 - Expression:
-  - `(http.request.uri.path eq "/api/turnstile-verify")`
+  - `(http.request.uri.path eq "/lingoleaf/api/turnstile-verify")`
 - Counting characteristics:
   - `IP`
 - Threshold:
@@ -31,7 +33,7 @@ Configure these in Cloudflare Dashboard:
 
 ## Rule 3: Optional stricter authenticated feature traffic
 - Expression:
-  - `(http.request.uri.path starts_with "/features" and http.user_agent ne "")`
+  - `(http.request.uri.path starts_with "/lingoleaf/features" and http.user_agent ne "")`
 - Counting characteristics:
   - `IP + User-Agent`
 - Threshold:
