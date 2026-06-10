@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/lib/supabase";
+import { absoluteAppUrl } from "@/lib/paths";
 
 interface AuthDialogProps {
   open: boolean;
@@ -27,8 +28,8 @@ const AuthDialog = ({ open, onOpenChange, defaultMode = "signin" }: AuthDialogPr
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const returnToCurrentPage = `${window.location.origin}${window.location.pathname}`;
-  const emailConfirmRedirectTo = `${window.location.origin}/email-confirmed`;
+  const returnToCurrentPage = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+  const emailConfirmRedirectTo = absoluteAppUrl("email-confirmed");
 
   const handleOAuth = async (provider: "google" | "apple") => {
     setLoading(true);

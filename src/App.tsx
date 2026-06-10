@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ROUTER_BASENAME } from "@/lib/paths";
 
 const Index = lazy(() => import("./pages/Index"));
 const AuthConfirm = lazy(() => import("./pages/AuthConfirm"));
@@ -31,7 +32,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={ROUTER_BASENAME}>
         <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<Index />} />

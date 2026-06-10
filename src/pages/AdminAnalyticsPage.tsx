@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useAuth } from "@/hooks/use-auth";
 import { fetchAdminAnalyticsDashboard, type AnalyticsRecentEvent } from "@/lib/admin-analytics-api";
+import { demoUser, isDemoMode } from "@/lib/demo/config";
 
 const formatDateTime = (value: string) =>
   new Intl.DateTimeFormat("en-US", {
@@ -68,6 +69,8 @@ const percentage = (value: number, total: number) => (total > 0 ? (value / total
 
 const AdminAnalyticsPage = () => {
   const { user, supabaseConfigured } = useAuth();
+  const demoMode = isDemoMode();
+  const effectiveUser = demoMode ? demoUser() : user;
   const [spanHours, setSpanHours] = useState<number>(1);
   const [eventNameFilter, setEventNameFilter] = useState("");
   const [installFilter, setInstallFilter] = useState("");
@@ -78,9 +81,9 @@ const AdminAnalyticsPage = () => {
   const [eventsPage, setEventsPage] = useState(1);
 
   const dashboardQuery = useQuery({
-    queryKey: ["admin-analytics-dashboard", user?.id, spanHours],
-    queryFn: () => fetchAdminAnalyticsDashboard({ userId: user?.id, spanHours, limit: 200 }),
-    enabled: Boolean(user?.id) && supabaseConfigured,
+    queryKey: ["admin-analytics-dashboard", effectiveUser?.id, spanHours, demoMode],
+    queryFn: () => fetchAdminAnalyticsDashboard({ userId: effectiveUser?.id, spanHours, limit: 200 }),
+    enabled: demoMode || (Boolean(user?.id) && supabaseConfigured),
   });
 
   const data = dashboardQuery.data;
@@ -298,11 +301,11 @@ const AdminAnalyticsPage = () => {
     pageWindow.push(page);
   }
 
-  if (!supabaseConfigured) {
+  if (!demoMode && !supabaseConfigured) {
     return <div className="mx-auto max-w-5xl px-6 py-10 text-destructive">Supabase not configured.</div>;
   }
 
-  if (!user) {
+  if (!demoMode && !user) {
     return <div className="mx-auto max-w-5xl px-6 py-10 text-muted-foreground">Log in as admin to view analytics.</div>;
   }
 
@@ -351,6 +354,9 @@ const AdminAnalyticsPage = () => {
       <main className="mx-auto max-w-6xl space-y-4 px-6 py-8">
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-semibold">Analytics Dashboard</h1>
+          {demoMode ? (
+            <p className="text-sm text-amber-700">Demo mode — seeded analytics data stored locally in your browser.</p>
+          ) : null}
           <p className="text-sm text-muted-foreground">
             Range: {formatDateTime(data.summary.from)} to {formatDateTime(data.summary.to)}
           </p>

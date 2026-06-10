@@ -23,7 +23,7 @@ In scope:
 
 - This repository (`lingoleaf-web`) and its Cloudflare Pages deployment
 - Supabase-backed community features (Feature Forum, App Updates, admin analytics API)
-- Cloudflare Pages Functions under `/functions/api/`
+- Cloudflare Pages Functions under `/lingoleaf/api/`
 
 Out of scope:
 

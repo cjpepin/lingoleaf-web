@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { apiPath } from "@/lib/paths";
 
 const Contact = () => {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -20,7 +21,7 @@ const Contact = () => {
     setStatus("loading");
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch(apiPath("contact"), {
         method: "POST",
         body: formData,
       });

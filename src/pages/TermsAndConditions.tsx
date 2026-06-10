@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import lingoleafIcon from "@/assets/lingoleaf_icon.png";
+import { withBase } from "@/lib/paths";
 
 const TermsAndConditions = () => {
   return (
@@ -19,7 +20,7 @@ const TermsAndConditions = () => {
       </header>
       <main className="flex-1 min-h-0">
         <iframe
-          src="/terms_and_conditions.html"
+          src={withBase("terms_and_conditions.html")}
           title="Terms and Conditions"
           className="w-full h-full min-h-[calc(100vh-73px)] border-0"
         />

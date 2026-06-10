@@ -1,49 +1,66 @@
-# Turnstile + Supabase Setup
+# Turnstile + Supabase Setup (lingoleaf schema)
 
-This project uses a server-verified Turnstile flow:
+LingoLeaf uses the **`lingoleaf` Postgres schema** in a shared Supabase project. Auth stays in `auth.*`; app data lives in `lingoleaf.*`.
 
-- Cloudflare Function verifies the Turnstile challenge.
-- Function validates the user's session JWT.
-- Function calls Supabase RPC `mark_forum_human_verified_for_user()` using the **service role key** (server-only).
-- Direct RPC calls from authenticated clients are blocked.
+## 1) Apply the greenfield migration
 
-## 1) Run Supabase migrations
+Run once on a fresh database (or empty `lingoleaf` schema):
 
-Run these migrations in order:
+```
+supabase/migrations/202604090001_lingoleaf_schema.sql
+```
 
-1. `202602240001_feature_forum.sql`
-2. `202602240002_admin_user_email_lookup.sql`
-3. `202602240003_forum_abuse_controls.sql`
-4. `202602240004_forum_reports_and_audit.sql`
-5. `202602240005_turnstile_rpc_no_service_role.sql`
-6. `202603200001_turnstile_rpc_lockdown.sql`
-7. `202603200002_analytics_admin_rpcs.sql`
-8. Remaining blog/moderation migrations in chronological order
+Via Supabase CLI:
 
-## 2) Cloudflare Pages environment variables
+```sh
+supabase db push
+```
 
-Set these in **Workers & Pages → your project → Settings → Environment variables**:
+Or paste the migration into the Supabase SQL editor.
 
-Client-exposed (for frontend build):
+## 2) Expose the schema to PostgREST
+
+In **Supabase Dashboard → Settings → API**, add `lingoleaf` to **Exposed schemas** (or use [`supabase/config.toml`](config.toml) with `schemas = ["lingoleaf", ...]`).
+
+## 3) Cloudflare Pages environment variables
+
+Client-exposed (frontend build):
 
 - `VITE_SUPABASE_URL`
 - `VITE_SUPABASE_ANON_KEY`
+- `VITE_SUPABASE_DB_SCHEMA=lingoleaf`
 - `VITE_TURNSTILE_SITE_KEY`
 
-Server-only (used by Functions):
+Server-only (Pages Functions under `/lingoleaf/api/*`):
 
 - `TURNSTILE_SECRET_KEY`
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY` — used only by `/api/turnstile-verify` after Turnstile passes; never expose to the client
+- `SUPABASE_SERVICE_ROLE_KEY` — Turnstile verification write only
 
-## 3) Turnstile dashboard
+## 4) Auth redirect URLs
 
-In Cloudflare Turnstile dashboard:
+Add these to **Supabase Auth → URL configuration** (replace `yourdomain.com`):
 
-- Create widget and copy site key + secret key.
-- Add allowed domains for your app.
+- `https://yourdomain.com/lingoleaf/email-confirmed`
+- `https://yourdomain.com/lingoleaf/**` (or specific routes)
 
-## 4) Redeploy
+## 5) Turnstile + redeploy
 
-Redeploy Cloudflare Pages so new env vars and migrations are active.
+- Restrict Turnstile widget domains to your parent domain.
+- Redeploy Cloudflare Pages after env vars and migrations are applied.
+
+## 6) Seed a forum admin
+
+```sql
+insert into lingoleaf.forum_admins (user_id)
+values ('YOUR_AUTH_USER_UUID');
+```
+
+## Shared database pattern
+
+Other demo apps can add their own schemas (e.g. `other_app`) in the same Supabase project. Each app:
+
+1. Creates its schema + grants
+2. Is exposed via PostgREST `Accept-Profile` / client `db.schema`
+3. Keeps auth in the shared `auth` schema

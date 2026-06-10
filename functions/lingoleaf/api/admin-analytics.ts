@@ -1,3 +1,5 @@
+import { supabaseApiHeaders } from "../../lib/supabase-schema.ts";
+
 interface Env {
   SUPABASE_URL?: string;
   SUPABASE_ANON_KEY?: string;
@@ -104,11 +106,7 @@ const supabaseRpc = async ({
 }) => {
   const response = await fetch(`${url}/rest/v1/rpc/${rpcName}`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      apikey: anonKey,
-      "Content-Type": "application/json",
-    },
+    headers: supabaseApiHeaders(anonKey, token),
     body: JSON.stringify(payload),
   });
 
@@ -152,10 +150,7 @@ export const onRequestGet = async ({ request, env }: { request: Request; env: En
 
   try {
     const meResponse = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        apikey: SUPABASE_ANON_KEY,
-      },
+      headers: supabaseApiHeaders(SUPABASE_ANON_KEY, token),
     });
 
     if (!meResponse.ok) {

@@ -1,5 +1,8 @@
 import { getIsForumAdmin } from "@/lib/forum-api";
+import { apiPath } from "@/lib/paths";
 import { supabase, supabaseConfigured } from "@/lib/supabase";
+import { isDemoMode } from "@/lib/demo/config";
+import { readLocalAnalyticsDashboard } from "@/lib/demo/localAnalytics";
 
 export interface AnalyticsDashboardSummary {
   from: string;
@@ -55,6 +58,13 @@ export const fetchAdminAnalyticsDashboard = async ({
   spanHours: number;
   limit?: number;
 }): Promise<AdminAnalyticsDashboard> => {
+  if (isDemoMode()) {
+    void userId;
+    void spanHours;
+    void limit;
+    return readLocalAnalyticsDashboard();
+  }
+
   assertSupabaseConfigured();
 
   if (!userId) {
@@ -78,7 +88,7 @@ export const fetchAdminAnalyticsDashboard = async ({
   const boundedLimit = Math.min(Math.max(Math.trunc(limit), 1), 200);
 
   const response = await fetch(
-    `/api/admin-analytics?from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(now.toISOString())}&limit=${boundedLimit}`,
+    `${apiPath("admin-analytics")}?from=${encodeURIComponent(from.toISOString())}&to=${encodeURIComponent(now.toISOString())}&limit=${boundedLimit}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

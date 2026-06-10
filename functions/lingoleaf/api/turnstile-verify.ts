@@ -1,3 +1,5 @@
+import { supabaseApiHeaders } from "../../lib/supabase-schema.ts";
+
 interface Env {
   TURNSTILE_SECRET_KEY?: string;
   SUPABASE_URL?: string;
@@ -71,10 +73,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     }
 
     const meResponse = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        apikey: SUPABASE_ANON_KEY,
-      },
+      headers: supabaseApiHeaders(SUPABASE_ANON_KEY, token),
     });
 
     if (!meResponse.ok) {
@@ -88,11 +87,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
 
     const rpcResponse = await fetch(`${SUPABASE_URL}/rest/v1/rpc/mark_forum_human_verified_for_user`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        apikey: SUPABASE_SERVICE_ROLE_KEY,
-        "Content-Type": "application/json",
-      },
+      headers: supabaseApiHeaders(SUPABASE_SERVICE_ROLE_KEY, SUPABASE_SERVICE_ROLE_KEY),
       body: JSON.stringify({ p_user_id: user.id }),
     });
 

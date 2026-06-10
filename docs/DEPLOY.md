@@ -1,6 +1,6 @@
 # Production deployment checklist
 
-Complete these steps after merging security hardening changes and **before** making the repository public.
+Complete these steps when deploying to **`/lingoleaf`** on your domain with the **`lingoleaf` Supabase schema**.
 
 ## 1. Rotate secrets
 
@@ -10,33 +10,37 @@ Follow [SECRET_AUDIT.md](SECRET_AUDIT.md):
 - [ ] Rotate `TURNSTILE_SECRET_KEY` in Cloudflare Turnstile dashboard
 - [ ] Add or rotate `SUPABASE_SERVICE_ROLE_KEY` in Cloudflare Pages (encrypted, server-only)
 
-## 2. Apply Supabase migrations
+## 2. Apply Supabase migration (greenfield)
 
-Run new migrations against production in order:
+On a fresh shared Supabase project (or empty `lingoleaf` schema):
 
-1. `202603200001_turnstile_rpc_lockdown.sql`
-2. `202603200002_analytics_admin_rpcs.sql`
+1. Apply [`supabase/migrations/202604090001_lingoleaf_schema.sql`](../supabase/migrations/202604090001_lingoleaf_schema.sql)
+2. Expose `lingoleaf` in **Settings → API → Exposed schemas**
+3. Seed admin: `insert into lingoleaf.forum_admins (user_id) values ('...');`
 
-If `analytics_events` already exists in production, the migration uses `create table if not exists` and `create or replace function` — safe to re-run.
-
-Verify in Supabase SQL editor:
+Verify in SQL editor:
 
 ```sql
--- Should fail for authenticated users (403/401):
-select public.mark_forum_human_verified_for_user(auth.uid());
-
--- Old function should be gone:
-select public.mark_forum_human_verified();
+-- Should fail for authenticated users:
+select lingoleaf.mark_forum_human_verified_for_user(auth.uid());
 ```
 
-## 3. Deploy to Cloudflare Pages
+## 3. Supabase Auth redirect URLs
 
-Ensure these env vars are set for **Production** and **Preview**:
+Add to **Auth → URL configuration** (replace `yourdomain.com`):
+
+- `https://yourdomain.com/lingoleaf/email-confirmed`
+- Site URL / redirect allow list for `/lingoleaf/**`
+
+## 4. Deploy to Cloudflare Pages
+
+Build env vars (**Production** and **Preview**):
 
 | Variable | Encrypted |
 |----------|-----------|
 | `VITE_SUPABASE_URL` | No (build-time) |
 | `VITE_SUPABASE_ANON_KEY` | No (build-time) |
+| `VITE_SUPABASE_DB_SCHEMA=lingoleaf` | No (build-time) |
 | `VITE_TURNSTILE_SITE_KEY` | No (build-time) |
 | `SUPABASE_URL` | Yes |
 | `SUPABASE_ANON_KEY` | Yes |
@@ -44,20 +48,20 @@ Ensure these env vars are set for **Production** and **Preview**:
 | `TURNSTILE_SECRET_KEY` | Yes |
 | `RESEND_API_KEY` | Yes |
 
-Trigger a production deploy after env vars are updated.
+Functions live at **`/lingoleaf/api/*`** (`functions/lingoleaf/api/`). SPA fallback: `public/_redirects`.
 
-## 4. Smoke tests
+## 5. Smoke tests
 
-After deploy, verify on [lingoleaf.app](https://lingoleaf.app):
+After deploy, verify at `https://yourdomain.com/lingoleaf/`:
 
-- [ ] Landing page loads
+- [ ] Landing page loads (assets under `/lingoleaf/assets/...`)
 - [ ] Sign in (email or OAuth) works
-- [ ] Feature Forum: Turnstile challenge appears for posting; post succeeds after verification
-- [ ] Contact form sends email
-- [ ] Admin analytics dashboard loads for a forum admin account
-- [ ] Direct RPC bypass blocked: authenticated REST call to `mark_forum_human_verified_for_user` returns 401/403
+- [ ] Feature Forum: Turnstile + posting works
+- [ ] Contact form at `/lingoleaf/contact` sends email
+- [ ] Admin analytics at `/lingoleaf/admin/analytics` loads for forum admins
+- [ ] Direct RPC bypass blocked for `mark_forum_human_verified_for_user`
 
-## 5. Local verification (pre-deploy)
+## 6. Local verification (pre-deploy)
 
 ```sh
 npm ci
@@ -66,4 +70,4 @@ npm test
 npm run build
 ```
 
-All commands must pass before deploying.
+Open [http://localhost:8080/lingoleaf/](http://localhost:8080/lingoleaf/) after `npm run dev`.

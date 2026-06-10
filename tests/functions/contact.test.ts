@@ -1,16 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { onRequestPost } from "../../functions/api/contact.ts";
+import { onRequestPost } from "../../functions/lingoleaf/api/contact.ts";
 import { jsonResponse, readJson, withMockedFetch } from "../helpers/http.ts";
 
-const createContactRequest = (fields: Record<string, string>, origin = "https://lingoleaf.app") => {
+const APP_ORIGIN = "https://example.com";
+const API_CONTACT = `${APP_ORIGIN}/lingoleaf/api/contact`;
+
+const createContactRequest = (fields: Record<string, string>, origin = APP_ORIGIN) => {
   const formData = new FormData();
 
   for (const [key, value] of Object.entries(fields)) {
     formData.set(key, value);
   }
 
-  return new Request("https://lingoleaf.app/api/contact", {
+  return new Request(API_CONTACT, {
     method: "POST",
     headers: { Origin: origin },
     body: formData,

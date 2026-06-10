@@ -1,0 +1,103 @@
+{
+  "version": "lingoleaf-web-analytics-v1",
+  "stores": {
+    "analytics_dashboard": [
+      {
+        "id": "default",
+        "value": {
+          "summary": {
+            "from": "2026-06-09T15:00:00.000Z",
+            "to": "2026-06-10T15:00:00.000Z",
+            "totals": {
+              "events": 1284,
+              "failures": 96,
+              "users": 214,
+              "installs": 178,
+              "last_event_at": "2026-06-10T14:58:00.000Z"
+            },
+            "daily_events": [
+              { "day": "2026-06-09", "count": 612 },
+              { "day": "2026-06-10", "count": 672 }
+            ],
+            "daily_failures": [
+              { "day": "2026-06-09", "count": 41 },
+              { "day": "2026-06-10", "count": 55 }
+            ],
+            "top_events": [
+              { "event_name": "book_opened", "count": 312 },
+              { "event_name": "translate_requested", "count": 241 },
+              { "event_name": "purchase_failed", "count": 38 },
+              { "event_name": "session_started", "count": 176 }
+            ]
+          },
+          "recent_events": [
+            {
+              "id": "evt-001",
+              "created_at": "2026-06-10T14:58:00.000Z",
+              "user_id": "user-abc-001",
+              "event_name": "purchase_failed",
+              "event_version": 1,
+              "install_id": "install-ios-001",
+              "app_version": "1.0.1",
+              "platform": "ios",
+              "locale": "en-US",
+              "severity": "critical",
+              "error_code": "storekit_timeout",
+              "error_message": "StoreKit purchase sheet timed out",
+              "purchase_product_id": "lingoleaf.premium.monthly",
+              "purchase_price": 4.99,
+              "purchase_currency": "USD",
+              "purchase_storefront": "USA"
+            },
+            {
+              "id": "evt-002",
+              "created_at": "2026-06-10T14:52:00.000Z",
+              "user_id": "user-abc-002",
+              "event_name": "translate_requested",
+              "event_version": 1,
+              "install_id": "install-ios-002",
+              "app_version": "1.0.1",
+              "platform": "ios",
+              "locale": "es-ES"
+            },
+            {
+              "id": "evt-003",
+              "created_at": "2026-06-10T14:47:00.000Z",
+              "user_id": null,
+              "event_name": "session_started",
+              "event_version": 1,
+              "install_id": "install-ios-003",
+              "app_version": "1.0.1",
+              "platform": "ios",
+              "locale": "fr-FR"
+            },
+            {
+              "id": "evt-004",
+              "created_at": "2026-06-10T14:40:00.000Z",
+              "user_id": "user-abc-004",
+              "event_name": "book_opened",
+              "event_version": 1,
+              "install_id": "install-ios-004",
+              "app_version": "1.0.0",
+              "platform": "ios",
+              "locale": "en-US"
+            },
+            {
+              "id": "evt-005",
+              "created_at": "2026-06-10T14:35:00.000Z",
+              "user_id": "user-abc-005",
+              "event_name": "api_error",
+              "event_version": 1,
+              "install_id": "install-ios-005",
+              "app_version": "1.0.0",
+              "platform": "ios",
+              "locale": "en-US",
+              "severity": "warning",
+              "error_code": "network_timeout"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

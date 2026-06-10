@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { onRequestGet } from "../../functions/api/admin-analytics.ts";
+import { onRequestGet } from "../../functions/lingoleaf/api/admin-analytics.ts";
 import { jsonResponse, readJson, withMockedFetch } from "../helpers/http.ts";
 
 const env = {
@@ -8,8 +8,11 @@ const env = {
   SUPABASE_ANON_KEY: "anon_key",
 };
 
+const APP_ORIGIN = "https://example.com";
+const API_ANALYTICS = `${APP_ORIGIN}/lingoleaf/api/admin-analytics`;
+
 const createRequest = (query: string, token = "session_token") =>
-  new Request(`https://lingoleaf.app/api/admin-analytics${query}`, {
+  new Request(`${API_ANALYTICS}${query}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
