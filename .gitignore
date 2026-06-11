@@ -31,3 +31,6 @@ service-account*.json
 *.njsproj
 *.sln
 *.sw?
+
+# Accidental backup copy — must not be committed as a submodule
+lingoleaf-web.bak/
