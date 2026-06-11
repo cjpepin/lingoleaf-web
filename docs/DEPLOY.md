@@ -50,6 +50,14 @@ Build env vars (**Production** and **Preview**):
 
 Functions live at **`/lingoleaf/api/*`** (`functions/lingoleaf/api/`). SPA fallback: `public/_redirects`.
 
+### Trigger deploy (webhook)
+
+Redeploy without pushing to Git:
+
+```bash
+curl -d "" "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/5aafe321-5f26-49f8-98d0-7a7357fab4be"
+```
+
 ## 5. Smoke tests
 
 After deploy, verify at `https://yourdomain.com/lingoleaf/`:
