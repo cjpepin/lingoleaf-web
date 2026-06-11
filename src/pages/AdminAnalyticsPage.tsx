@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle, ArrowLeft, FilterX } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import AuthControls from "@/components/auth/AuthControls";
+import PortfolioBackLink from "@/components/PortfolioBackLink";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -334,6 +335,7 @@ const AdminAnalyticsPage = () => {
             Back to forum
           </Link>
           <div className="flex items-center gap-2">
+            <PortfolioBackLink />
             <Select value={String(spanHours)} onValueChange={(value) => setSpanHours(Number(value))}>
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="Time span" />

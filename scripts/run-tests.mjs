@@ -17,6 +17,7 @@ const esbuildDefine = {
   "import.meta.env.SUPABASE_ANON_KEY": JSON.stringify("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.test.signature"),
   "import.meta.env.VITE_TURNSTILE_SITE_KEY": JSON.stringify("test-site-key"),
   "import.meta.env.VITE_SUPABASE_DB_SCHEMA": JSON.stringify("lingoleaf"),
+  "import.meta.env.VITE_DEMO_MODE": JSON.stringify("false"),
 };
 
 const collectTestFiles = async (dir) => {

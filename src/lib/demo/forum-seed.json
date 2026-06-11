@@ -1,0 +1,268 @@
+{
+  "version": "lingoleaf-web-demo-v2",
+  "stores": {
+    "feature_requests": [
+      {
+        "id": "33333333-3333-4333-8333-333333333301",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333301",
+          "created_by": "00000000-0000-4000-8000-000000000002",
+          "title": "Offline flashcard reviews",
+          "body": "Would love to review saved vocabulary on flights without needing cell service. Cache the next N cards locally and sync review results when back online.",
+          "tags": [
+            "flashcards",
+            "offline"
+          ],
+          "status": "planned",
+          "pinned": true,
+          "locked": false,
+          "vote_count": 42,
+          "comment_count": 3,
+          "created_at": "2025-11-12T14:00:00.000Z",
+          "updated_at": "2025-12-01T10:00:00.000Z"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333302",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333302",
+          "created_by": "00000000-0000-4000-8000-000000000003",
+          "title": "Garden mode streak recovery",
+          "body": "If I miss a day because of travel, let me spend GP to protect my streak once per month instead of resetting to seed stage.",
+          "tags": [
+            "garden",
+            "goals"
+          ],
+          "status": "open",
+          "pinned": false,
+          "locked": false,
+          "vote_count": 28,
+          "comment_count": 2,
+          "created_at": "2025-12-05T09:30:00.000Z",
+          "updated_at": "2025-12-05T09:30:00.000Z"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333303",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333303",
+          "created_by": "00000000-0000-4000-8000-000000000002",
+          "title": "Highlight colors per language",
+          "body": "Auto-assign highlight colors based on source language so my Spanish and French passages are visually distinct in the reader.",
+          "tags": [
+            "reader",
+            "highlights"
+          ],
+          "status": "in_progress",
+          "pinned": false,
+          "locked": false,
+          "vote_count": 19,
+          "comment_count": 4,
+          "created_at": "2026-01-18T16:00:00.000Z",
+          "updated_at": "2026-03-10T11:00:00.000Z"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333304",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333304",
+          "created_by": "00000000-0000-4000-8000-000000000003",
+          "title": "Import Anki decks",
+          "body": "Many learners already have curated decks. Support importing a basic Anki CSV into a vocab list with term and translation columns.",
+          "tags": [
+            "import",
+            "study"
+          ],
+          "status": "open",
+          "pinned": false,
+          "locked": false,
+          "vote_count": 35,
+          "comment_count": 1,
+          "created_at": "2026-02-02T08:00:00.000Z",
+          "updated_at": "2026-02-02T08:00:00.000Z"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333305",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333305",
+          "created_by": "00000000-0000-4000-8000-000000000002",
+          "title": "iPad split-screen reader",
+          "body": "On iPad, show the translation sheet beside the EPUB instead of covering the text. Especially helpful for study sessions.",
+          "tags": [
+            "ipad",
+            "reader"
+          ],
+          "status": "done",
+          "pinned": false,
+          "locked": true,
+          "vote_count": 51,
+          "comment_count": 5,
+          "created_at": "2025-09-01T12:00:00.000Z",
+          "updated_at": "2026-04-01T09:00:00.000Z"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333306",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333306",
+          "created_by": "00000000-0000-4000-8000-000000000003",
+          "title": "Community reading challenges",
+          "body": "Monthly themed challenges (e.g. 20 minutes of French per day) with lightweight leaderboards and optional forum threads.",
+          "tags": [
+            "community",
+            "goals"
+          ],
+          "status": "declined",
+          "pinned": false,
+          "locked": false,
+          "vote_count": 8,
+          "comment_count": 2,
+          "created_at": "2025-10-20T10:00:00.000Z",
+          "updated_at": "2025-11-30T15:00:00.000Z"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333307",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333307",
+          "created_by": "00000000-0000-4000-8000-000000000002",
+          "title": "Pronunciation audio on flashcards",
+          "body": "Play TTS for the source term when flipping a card. Helpful for tonal languages and French liaison practice.",
+          "tags": [
+            "flashcards",
+            "audio"
+          ],
+          "status": "open",
+          "pinned": false,
+          "locked": false,
+          "vote_count": 22,
+          "comment_count": 0,
+          "created_at": "2026-04-15T13:00:00.000Z",
+          "updated_at": "2026-04-15T13:00:00.000Z"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333308",
+        "value": {
+          "id": "33333333-3333-4333-8333-333333333308",
+          "created_by": "00000000-0000-4000-8000-000000000003",
+          "title": "Dark mode for web forum",
+          "body": "The companion site is bright when I'm reading at night. Match the app's dark palette on /features and /updates.",
+          "tags": [
+            "web",
+            "design"
+          ],
+          "status": "planned",
+          "pinned": false,
+          "locked": false,
+          "vote_count": 14,
+          "comment_count": 1,
+          "created_at": "2026-05-01T18:00:00.000Z",
+          "updated_at": "2026-05-20T12:00:00.000Z"
+        }
+      }
+    ],
+    "feature_votes": [
+      {
+        "id": "33333333-3333-4333-8333-333333333301:00000000-0000-4000-8000-000000000003",
+        "value": {
+          "feature_id": "33333333-3333-4333-8333-333333333301",
+          "user_id": "00000000-0000-4000-8000-000000000003"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333302:00000000-0000-4000-8000-000000000002",
+        "value": {
+          "feature_id": "33333333-3333-4333-8333-333333333302",
+          "user_id": "00000000-0000-4000-8000-000000000002"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333303:00000000-0000-4000-8000-000000000003",
+        "value": {
+          "feature_id": "33333333-3333-4333-8333-333333333303",
+          "user_id": "00000000-0000-4000-8000-000000000003"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333304:00000000-0000-4000-8000-000000000002",
+        "value": {
+          "feature_id": "33333333-3333-4333-8333-333333333304",
+          "user_id": "00000000-0000-4000-8000-000000000002"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333305:00000000-0000-4000-8000-000000000002",
+        "value": {
+          "feature_id": "33333333-3333-4333-8333-333333333305",
+          "user_id": "00000000-0000-4000-8000-000000000002"
+        }
+      },
+      {
+        "id": "33333333-3333-4333-8333-333333333305:00000000-0000-4000-8000-000000000003",
+        "value": {
+          "feature_id": "33333333-3333-4333-8333-333333333305",
+          "user_id": "00000000-0000-4000-8000-000000000003"
+        }
+      }
+    ],
+    "feature_comments": [
+      {
+        "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0001",
+        "value": {
+          "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0001",
+          "feature_id": "33333333-3333-4333-8333-333333333301",
+          "created_by": "00000000-0000-4000-8000-000000000003",
+          "body": "+1 — flights are where I actually have time to review.",
+          "created_at": "2025-11-13T08:00:00.000Z",
+          "updated_at": "2025-11-13T08:00:00.000Z"
+        }
+      },
+      {
+        "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0002",
+        "value": {
+          "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0002",
+          "feature_id": "33333333-3333-4333-8333-333333333301",
+          "created_by": "00000000-0000-4000-8000-000000000099",
+          "body": "On the roadmap for 1.2 — we're prototyping a 50-card offline queue.",
+          "created_at": "2025-12-01T10:00:00.000Z",
+          "updated_at": "2025-12-01T10:00:00.000Z"
+        }
+      },
+      {
+        "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0003",
+        "value": {
+          "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0003",
+          "feature_id": "33333333-3333-4333-8333-333333333303",
+          "created_by": "00000000-0000-4000-8000-000000000002",
+          "body": "Spanish in green and French in lavender would match my mental model.",
+          "created_at": "2026-01-20T11:00:00.000Z",
+          "updated_at": "2026-01-20T11:00:00.000Z"
+        }
+      },
+      {
+        "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0004",
+        "value": {
+          "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0004",
+          "feature_id": "33333333-3333-4333-8333-333333333305",
+          "created_by": "00000000-0000-4000-8000-000000000099",
+          "body": "Shipped in 1.0.1 — thanks for the detailed iPad screenshots in the original request.",
+          "created_at": "2026-04-01T09:00:00.000Z",
+          "updated_at": "2026-04-01T09:00:00.000Z"
+        }
+      },
+      {
+        "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0005",
+        "value": {
+          "id": "cccccccc-cccc-4ccc-8ccc-cccccccc0005",
+          "feature_id": "33333333-3333-4333-8333-333333333306",
+          "created_by": "00000000-0000-4000-8000-000000000099",
+          "body": "Declining for now — we want to nail solo reading goals before adding social pressure.",
+          "created_at": "2025-11-30T15:00:00.000Z",
+          "updated_at": "2025-11-30T15:00:00.000Z"
+        }
+      }
+    ]
+  }
+}

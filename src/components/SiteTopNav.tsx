@@ -5,6 +5,8 @@ import lingoleafIcon from "@/assets/lingoleaf_icon.png";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import AuthControls from "@/components/auth/AuthControls";
+import PortfolioNavLink from "@/components/PortfolioNavLink";
+import PortfolioBackLink from "@/components/PortfolioBackLink";
 
 const SiteTopNav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,11 +16,14 @@ const SiteTopNav = () => {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border/70 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4 sm:px-6">
-        <Link to="/" className="inline-flex items-center gap-2">
-          <img src={lingoleafIcon} alt="LingoLeaf" className="h-8 w-8 rounded-lg" />
-          <span className="text-sm font-semibold tracking-tight">LingoLeaf</span>
-        </Link>
+      <div className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between gap-3 px-4 sm:px-6">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <PortfolioNavLink className="hidden shrink-0 sm:inline" />
+          <Link to="/" className="inline-flex min-w-0 items-center gap-2">
+            <img src={lingoleafIcon} alt="LingoLeaf" className="h-8 w-8 shrink-0 rounded-lg" />
+            <span className="truncate text-sm font-semibold tracking-tight">LingoLeaf</span>
+          </Link>
+        </div>
 
         <div className="hidden items-center gap-2 sm:flex">
           {!onFeatureForum ? (
@@ -46,6 +51,7 @@ const SiteTopNav = () => {
                 <SheetTitle>Menu</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col gap-3">
+                <PortfolioNavLink className="px-1 py-2" />
                 {!onFeatureForum ? (
                   <SheetClose asChild>
                     <Button asChild variant="outline" className="w-full justify-start">

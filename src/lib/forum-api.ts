@@ -1,3 +1,9 @@
+import { isDemoMode } from "@/lib/demo/config";
+import {
+  readLocalFeatureComments,
+  readLocalFeatureRequestById,
+  readLocalFeatureRequests,
+} from "@/lib/demo/localForum";
 import { supabase, supabaseConfigured } from "@/lib/supabase";
 import type {
   CreateFeatureRequestInput,
@@ -32,6 +38,10 @@ const normalizeTags = (tags: string[]) => {
 };
 
 export const listFeatureRequests = async ({ sort, status, mine, userId }: ListFeaturesParams) => {
+  if (isDemoMode()) {
+    return readLocalFeatureRequests({ sort, status, mine, userId });
+  }
+
   assertSupabaseConfigured();
 
   let query = supabase
@@ -85,6 +95,14 @@ export const listFeatureRequests = async ({ sort, status, mine, userId }: ListFe
 };
 
 export const getFeatureRequestById = async (id: string, userId?: string) => {
+  if (isDemoMode()) {
+    const row = await readLocalFeatureRequestById(id, userId);
+    if (!row) {
+      throw new Error("Feature request not found.");
+    }
+    return row;
+  }
+
   assertSupabaseConfigured();
 
   const { data, error } = await supabase.from("feature_requests").select("*").eq("id", id).maybeSingle();
@@ -221,6 +239,10 @@ export const toggleFeatureVote = async (featureId: string, userId: string, hasVo
 };
 
 export const listFeatureComments = async (featureId: string) => {
+  if (isDemoMode()) {
+    return readLocalFeatureComments(featureId);
+  }
+
   assertSupabaseConfigured();
 
   const { data, error } = await supabase
@@ -295,6 +317,10 @@ export const deleteFeatureComment = async (commentId: string, userId: string, is
 };
 
 export const getIsForumAdmin = async (userId?: string) => {
+  if (isDemoMode()) {
+    return userId === "00000000-0000-4000-8000-000000000099";
+  }
+
   assertSupabaseConfigured();
 
   if (!userId) {

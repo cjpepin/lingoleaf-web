@@ -1,3 +1,9 @@
+import { isDemoMode } from "@/lib/demo/config";
+import {
+  readLocalBlogComments,
+  readLocalBlogPostById,
+  readLocalBlogPosts,
+} from "@/lib/demo/localBlog";
 import { supabase, supabaseConfigured } from "@/lib/supabase";
 import type { BlogComment, BlogPost, CreateBlogPostInput, UpdateBlogPostInput } from "@/lib/blog-types";
 import { getSupabaseErrorMessage, normalizeTextInput, normalizedCharCount } from "@/lib/content-validation";
@@ -9,6 +15,10 @@ const assertSupabaseConfigured = () => {
 };
 
 export const listBlogPosts = async () => {
+  if (isDemoMode()) {
+    return readLocalBlogPosts();
+  }
+
   assertSupabaseConfigured();
 
   const { data, error } = await supabase.from("blog_posts").select("*").order("created_at", { ascending: false });
@@ -21,6 +31,14 @@ export const listBlogPosts = async () => {
 };
 
 export const getBlogPostById = async (id: string) => {
+  if (isDemoMode()) {
+    const post = await readLocalBlogPostById(id);
+    if (!post) {
+      throw new Error("App update not found.");
+    }
+    return post;
+  }
+
   assertSupabaseConfigured();
 
   const { data, error } = await supabase.from("blog_posts").select("*").eq("id", id).maybeSingle();
@@ -115,6 +133,10 @@ export const deleteBlogPost = async (id: string) => {
 };
 
 export const listBlogComments = async (postId: string) => {
+  if (isDemoMode()) {
+    return readLocalBlogComments(postId);
+  }
+
   assertSupabaseConfigured();
 
   const { data, error } = await supabase

@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Send, CheckCircle, AlertCircle } from "lucide-react";
-import lingoleafIcon from "@/assets/lingoleaf_icon.png";
+import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { apiPath } from "@/lib/paths";
+import SecondaryPageHeader from "@/components/SecondaryPageHeader";
 
 const Contact = () => {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -43,18 +42,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <header className="sticky top-0 z-10 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex items-center gap-4 px-6 py-4 max-w-4xl mx-auto">
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Link>
-          <img src={lingoleafIcon} alt="Lingoleaf" className="w-8 h-8 rounded-lg" />
-        </div>
-      </header>
+      <SecondaryPageHeader />
 
       <main className="flex-1 px-6 py-12 max-w-xl mx-auto w-full">
         <h1 className="text-2xl font-bold text-foreground mb-2">Contact Us</h1>

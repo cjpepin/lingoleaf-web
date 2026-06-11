@@ -34,3 +34,6 @@ service-account*.json
 
 # Accidental backup copy — must not be committed as a submodule
 lingoleaf-web.bak/
+
+# Expo web demo synced from projects/lingoleaf (see apps/portfolio/scripts/sync-lingoleaf-demo.sh)
+public/demo/

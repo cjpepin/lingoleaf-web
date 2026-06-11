@@ -1,6 +1,12 @@
 /** App mount path on the parent domain (no trailing slash). */
 export const ROUTER_BASENAME = "/lingoleaf";
 
+/** Parent portfolio site URL (no trailing slash unless root). */
+export const portfolioHome =
+  import.meta.env.VITE_PORTFOLIO_URL?.trim() || "https://connorjpepin.com/";
+
+export const portfolioProjects = `${portfolioHome.replace(/\/$/, "")}/#projects`;
+
 /** Vite base URL with trailing slash, e.g. `/lingoleaf/`. */
 export const assetBase = import.meta.env.BASE_URL;
 

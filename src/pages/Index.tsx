@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import AppStoreButtons from "@/components/AppStoreButtons";
+import AppDemoEmbed from "@/components/AppDemoEmbed";
 import FeatureShowcase from "@/components/FeatureShowcase";
 import lingoleafIcon from "@/assets/lingoleaf_icon.png";
 import { Link } from "react-router-dom";
 import { ExternalLink, ChevronDown } from "lucide-react";
 import SiteTopNav from "@/components/SiteTopNav";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -15,12 +17,22 @@ const Index = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (window.location.hash === "#try-demo") {
+      document.getElementById("try-demo")?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
+
   const handleOpenApp = () => {
     window.location.href = "lingoleaf://";
   };
 
   const handleLearnMore = () => {
     document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleTryDemo = () => {
+    document.getElementById("try-demo")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const learnMoreOpacity = Math.max(0, 1 - scrollY / 150);
@@ -54,7 +66,10 @@ const Index = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col items-center gap-6 pt-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "300ms", animationFillMode: "forwards" }}>
             <AppStoreButtons />
-            
+            <Button type="button" variant="outline" size="lg" onClick={handleTryDemo}>
+              Try in browser
+            </Button>
+
             {/* Subtle open app link for users who already have it */}
             <button
               onClick={handleOpenApp}
@@ -77,6 +92,21 @@ const Index = () => {
           <span className="text-sm font-medium">Learn more</span>
           <ChevronDown className="w-5 h-5 animate-bounce-soft" />
         </button>
+      </section>
+
+      {/* Browser demo */}
+      <section id="try-demo" className="scroll-mt-20 border-t border-border/50 px-6 py-16 md:py-24">
+        <div className="mx-auto max-w-4xl space-y-8 text-center">
+          <div className="space-y-3">
+            <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
+              Try LingoLeaf in your browser
+            </h2>
+            <p className="mx-auto max-w-lg text-muted-foreground">
+              Explore the mobile app experience — reading, translation, and vocabulary — without installing anything.
+            </p>
+          </div>
+          <AppDemoEmbed />
+        </div>
       </section>
 
       {/* Features Section */}
