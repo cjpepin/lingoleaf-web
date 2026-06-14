@@ -78,18 +78,18 @@ ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO lingoleaf.analytics_events (event_name, event_version, user_id, install_id, app_version, platform, locale, metadata, created_at)
 VALUES
-  ('session_started', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-00', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:50:09.380Z'),
-  ('session_started', 1, null, 'install-ios-01', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:49:09.380Z'),
-  ('session_started', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-02', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:48:09.380Z'),
-  ('book_opened', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-00', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:50:09.380Z'),
-  ('book_opened', 1, null, 'install-ios-01', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:49:09.380Z'),
-  ('book_opened', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-02', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:48:09.380Z'),
-  ('translate_requested', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-00', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:50:09.380Z'),
-  ('translate_requested', 1, null, 'install-ios-01', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:49:09.380Z'),
-  ('translate_requested', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-02', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T01:48:09.380Z'),
-  ('purchase_failed', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-10', '1.0.1', 'ios', 'en-US', '{}'::jsonb, '2026-06-10T01:50:09.380Z'),
-  ('purchase_failed', 1, null, 'install-ios-11', '1.0.1', 'ios', 'en-US', '{}'::jsonb, '2026-06-10T01:49:09.380Z'),
-  ('purchase_failed', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-12', '1.0.1', 'ios', 'en-US', '{}'::jsonb, '2026-06-10T01:48:09.380Z')
+  ('session_started', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-00', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T15:00:19.379Z'),
+  ('session_started', 1, null, 'install-ios-01', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T14:59:19.379Z'),
+  ('session_started', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-02', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T14:58:19.379Z'),
+  ('book_opened', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-00', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T15:00:19.379Z'),
+  ('book_opened', 1, null, 'install-ios-01', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T14:59:19.379Z'),
+  ('book_opened', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-02', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T14:58:19.379Z'),
+  ('translate_requested', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-00', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T15:00:19.379Z'),
+  ('translate_requested', 1, null, 'install-ios-01', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T14:59:19.379Z'),
+  ('translate_requested', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-02', '1.0.2', 'ios', 'en-US', '{}'::jsonb, '2026-06-12T14:58:19.379Z'),
+  ('purchase_failed', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-10', '1.0.1', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T15:00:19.379Z'),
+  ('purchase_failed', 1, null, 'install-ios-11', '1.0.1', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T14:59:19.379Z'),
+  ('purchase_failed', 1, '00000000-0000-4000-8000-000000000002'::uuid, 'install-ios-12', '1.0.1', 'ios', 'en-US', '{}'::jsonb, '2026-06-11T14:58:19.379Z')
 ;
 
 SET LOCAL session_replication_role = DEFAULT;

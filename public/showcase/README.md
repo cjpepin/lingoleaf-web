@@ -1,15 +1,39 @@
-# Showcase assets
+# LingoLeaf showcase assets
 
-Static assets used in the README and project documentation.
+Place recruiter-facing media here. Paths are served at `/lingoleaf/showcase/` after build.
 
-| File | Description |
-|------|-------------|
-| `app-icon.png` | LingoLeaf app icon |
+| File | Purpose |
+|------|---------|
+| `lingoleaf-recruiter.mp4` | 18–20s horizontal demo video (1920×1080, H.264) |
+| `lingoleaf-recruiter-poster.jpg` | Video poster / fallback (~1280px wide) |
+| `read_translate.png` | Story tab: read & translate screenshot |
+| `save.png` | Story tab: save & organize screenshot |
+| `study.png` | Story tab: review & progress screenshot |
 
-For full UI previews, visit the [live site](https://lingoleaf.app):
+Optional: `lingoleaf-recruiter.vtt` for video captions.
 
-- [Landing page](https://lingoleaf.app/)
-- [Feature Forum](https://lingoleaf.app/features)
-- [App Updates](https://lingoleaf.app/updates)
+Until files are added, the showcase section shows a styled fallback.
 
-To add site screenshots, capture them from production and save as `landing.png`, `forum.png`, and `updates.png` in this directory.
+## Recording the video (native iOS)
+
+Use the LingoLeaf subproject — **not** the web embed — for App Store–quality captures.
+
+```bash
+cd projects/lingoleaf
+cp .env.example .env   # demo Supabase URL + anon key (seeded catalog)
+npm install
+npm run ios:recording
+```
+
+Options:
+
+| Flag | Purpose |
+|------|---------|
+| `--reset-app` | Uninstall app first (fresh onboarding/tutorial state) |
+| `--skip-typecheck` | Faster relaunch between takes |
+| `--clean` | Clear DerivedData before build |
+| `SIMULATOR_NAME="iPhone 16 Pro" npm run ios:recording` | Different device |
+
+Record via **Simulator → File → Record Screen** or QuickTime. Storyboard timings are printed when the script starts.
+
+After export, copy assets into this folder and run `npm run sync:lingoleaf-web` from `apps/portfolio`.

@@ -1,15 +1,30 @@
 import { useState, useEffect } from "react";
 import AppStoreButtons from "@/components/AppStoreButtons";
-import AppDemoEmbed from "@/components/AppDemoEmbed";
+import DemoSection from "@/components/DemoSection";
 import FeatureShowcase from "@/components/FeatureShowcase";
+import LingoLeafShowcase from "@/components/LingoLeafShowcase";
+import ShowcaseStoryTabs from "@/components/ShowcaseStoryTabs";
 import lingoleafIcon from "@/assets/lingoleaf_icon.png";
 import { Link } from "react-router-dom";
 import { ExternalLink, ChevronDown } from "lucide-react";
 import SiteTopNav from "@/components/SiteTopNav";
 import { Button } from "@/components/ui/button";
+import type { DemoEmbedMode } from "@/components/AppDemoEmbed";
+
+function parseDemoHash(hash: string): { expandDemo: boolean; mode: DemoEmbedMode } {
+  if (hash === "#guided-demo") {
+    return { expandDemo: true, mode: "showcase" };
+  }
+  if (hash === "#try-demo" || hash.startsWith("#try-demo")) {
+    return { expandDemo: true, mode: "explore" };
+  }
+  return { expandDemo: false, mode: "explore" };
+}
 
 const Index = () => {
   const [scrollY, setScrollY] = useState(0);
+  const [demoExpanded, setDemoExpanded] = useState(false);
+  const [demoMode, setDemoMode] = useState<DemoEmbedMode>("explore");
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -18,7 +33,16 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (window.location.hash === "#try-demo") {
+    const hash = window.location.hash;
+    if (hash === "#showcase" || hash.startsWith("#showcase")) {
+      document.getElementById("showcase")?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    const { expandDemo, mode } = parseDemoHash(hash);
+    if (expandDemo) {
+      setDemoExpanded(true);
+      setDemoMode(mode);
       document.getElementById("try-demo")?.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
@@ -27,12 +51,8 @@ const Index = () => {
     window.location.href = "lingoleaf://";
   };
 
-  const handleLearnMore = () => {
-    document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleTryDemo = () => {
-    document.getElementById("try-demo")?.scrollIntoView({ behavior: "smooth" });
+  const handleWatchShowcase = () => {
+    document.getElementById("showcase")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const learnMoreOpacity = Math.max(0, 1 - scrollY / 150);
@@ -44,7 +64,6 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative px-6 min-h-[calc(100vh-4rem)] flex items-center justify-center">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          {/* App Icon */}
           <div className="flex justify-center opacity-0 animate-fade-in" style={{ animationDelay: "0ms", animationFillMode: "forwards" }}>
             <img
               src={lingoleafIcon}
@@ -53,7 +72,6 @@ const Index = () => {
             />
           </div>
 
-          {/* App Name & Tagline */}
           <div className="space-y-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "150ms", animationFillMode: "forwards" }}>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
               LingoLeaf
@@ -63,58 +81,43 @@ const Index = () => {
             </p>
           </div>
 
-          {/* CTA Buttons */}
           <div className="flex flex-col items-center gap-6 pt-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "300ms", animationFillMode: "forwards" }}>
             <AppStoreButtons />
-            <Button type="button" variant="outline" size="lg" onClick={handleTryDemo}>
-              Try in browser
+            <Button type="button" variant="outline" size="lg" onClick={handleWatchShowcase}>
+              Watch showcase
             </Button>
 
-            {/* Subtle open app link for users who already have it */}
             <button
               onClick={handleOpenApp}
               className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              Already have it? 
+              Already have it?
               <span className="underline underline-offset-2">Open App</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
 
-        {/* Learn more arrow - fades on scroll */}
         <button
-          onClick={handleLearnMore}
+          onClick={handleWatchShowcase}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-muted-foreground hover:text-foreground transition-colors duration-300"
           style={{ opacity: learnMoreOpacity, pointerEvents: learnMoreOpacity < 0.1 ? "none" : "auto" }}
-          aria-label="Scroll to learn more"
+          aria-label="Scroll to showcase"
         >
-          <span className="text-sm font-medium">Learn more</span>
+          <span className="text-sm font-medium">See what I built</span>
           <ChevronDown className="w-5 h-5 animate-bounce-soft" />
         </button>
       </section>
 
-      {/* Browser demo */}
-      <section id="try-demo" className="scroll-mt-20 border-t border-border/50 px-6 py-16 md:py-24">
-        <div className="mx-auto max-w-4xl space-y-8 text-center">
-          <div className="space-y-3">
-            <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl">
-              Try LingoLeaf in your browser
-            </h2>
-            <p className="mx-auto max-w-lg text-muted-foreground">
-              Explore the mobile app experience — reading, translation, and vocabulary — without installing anything.
-            </p>
-          </div>
-          <AppDemoEmbed />
-        </div>
-      </section>
+      <LingoLeafShowcase />
+      <ShowcaseStoryTabs />
 
-      {/* Features Section */}
       <div id="features">
         <FeatureShowcase />
       </div>
 
-      {/* Footer */}
+      <DemoSection initialExpanded={demoExpanded} initialMode={demoMode} />
+
       <footer className="px-6 py-12 text-center border-t border-border/50">
         <div className="max-w-md mx-auto space-y-6">
           <img

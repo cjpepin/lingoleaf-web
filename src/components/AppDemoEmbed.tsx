@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
 
-const demoSrc = "/lingoleaf/demo/embed/index.html";
+const demoBaseSrc = "/lingoleaf/demo/embed/index.html";
 
-/** Native iPhone 15 logical frame (393×852) plus minimal embed padding. */
-const DEMO_FRAME_WIDTH = 425;
-const DEMO_FRAME_HEIGHT = 876;
+/** Scaled iPhone frame — smaller than full device for portfolio embed. */
+const DEMO_FRAME_WIDTH = 320;
+const DEMO_FRAME_HEIGHT = 640;
 
-export default function AppDemoEmbed() {
+export type DemoEmbedMode = "showcase" | "explore";
+
+function isExpoEmbedHtml(html: string): boolean {
+  return html.includes("_expo/static") || html.includes("expo-reset");
+}
+
+type Props = {
+  mode?: DemoEmbedMode;
+  load?: boolean;
+};
+
+export default function AppDemoEmbed({ mode = "explore", load = false }: Props) {
   const buildFlag = import.meta.env.VITE_HAS_DEMO === "true";
   const [demoReady, setDemoReady] = useState(buildFlag);
 
@@ -14,9 +25,11 @@ export default function AppDemoEmbed() {
     if (buildFlag) return;
 
     let cancelled = false;
-    fetch(demoSrc, { method: "HEAD" })
-      .then((response) => {
-        if (!cancelled && response.ok) {
+    fetch(demoBaseSrc)
+      .then(async (response) => {
+        if (cancelled || !response.ok) return;
+        const html = await response.text();
+        if (isExpoEmbedHtml(html)) {
           setDemoReady(true);
         }
       })
@@ -26,6 +39,10 @@ export default function AppDemoEmbed() {
       cancelled = true;
     };
   }, [buildFlag]);
+
+  if (!load) {
+    return null;
+  }
 
   if (!demoReady) {
     return (
@@ -44,17 +61,30 @@ cd ../../apps/portfolio
     );
   }
 
+  const demoSrc = `${demoBaseSrc}?mode=${mode}`;
+
   return (
-    <div className="flex justify-center overflow-auto rounded-xl bg-[#E7ECE8] p-4">
-      <iframe
-        title="LingoLeaf web demo"
-        src={demoSrc}
-        width={DEMO_FRAME_WIDTH}
-        height={DEMO_FRAME_HEIGHT}
-        className="shrink-0 border-0 shadow-lg"
-        style={{ minWidth: DEMO_FRAME_WIDTH, minHeight: DEMO_FRAME_HEIGHT }}
-        loading="lazy"
-      />
+    <div className="flex justify-center overflow-auto rounded-xl bg-[#E7ECE8] px-6 py-10">
+      <div
+        className="shrink-0 rounded-[40px] bg-[#151516] p-2.5 shadow-2xl"
+        style={{ width: DEMO_FRAME_WIDTH + 20, minWidth: DEMO_FRAME_WIDTH + 20 }}
+      >
+        <iframe
+          key={mode}
+          title="LingoLeaf web demo"
+          src={demoSrc}
+          width={DEMO_FRAME_WIDTH}
+          height={DEMO_FRAME_HEIGHT}
+          className="block border-0"
+          style={{
+            minWidth: DEMO_FRAME_WIDTH,
+            minHeight: DEMO_FRAME_HEIGHT,
+            borderRadius: 32,
+            overflow: "hidden",
+          }}
+          loading="lazy"
+        />
+      </div>
     </div>
   );
 }
